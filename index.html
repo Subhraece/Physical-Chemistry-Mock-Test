@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Chemistry Mock Test - Cyber Dark Edition</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --container-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --correct: #22c55e;
+            --incorrect: #ef4444;
+            --border-radius: 12px;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        h1 { text-align: center; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .question-container { background: var(--container-bg); padding: 20px; margin-bottom: 20px; border-radius: var(--border-radius); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5); border: 1px solid transparent; transition: all 0.3s ease; }
+        .question-container:hover { border-color: #334155; transform: translateY(-2px); }
+        .question { font-weight: 600; margin-bottom: 15px; font-size: 1.05rem; }
+        
+        .options { list-style-type: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .options label { cursor: pointer; display: flex; align-items: center; background: #0f172a; padding: 10px; border-radius: 8px; border: 1px solid #334155; transition: border-color 0.2s; }
+        .options label:hover { border-color: var(--accent); }
+        .options input[type="radio"] { margin-right: 10px; accent-color: var(--accent); }
+        
+        input[type="text"] { padding: 12px; width: 150px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: var(--text-main); font-size: 1rem; outline: none; transition: border-color 0.2s; }
+        input[type="text"]:focus { border-color: var(--accent); box-shadow: 0 0 8px rgba(56, 189, 248, 0.3); }
+
+        .correct { border: 2px solid var(--correct) !important; background-color: rgba(34, 197, 94, 0.05); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
+        .incorrect { border: 2px solid var(--incorrect) !important; background-color: rgba(239, 68, 68, 0.05); box-shadow: 0 0 15px rgba(239, 68, 68, 0.2); }
+        
+        #grade-btn { display: block; width: 100%; padding: 18px; font-size: 20px; color: var(--bg-color); background-color: var(--accent); border: none; border-radius: var(--border-radius); cursor: pointer; margin-top: 30px; font-weight: bold; text-transform: uppercase; transition: background 0.3s, transform 0.1s; }
+        #grade-btn:hover { background-color: #0ea5e9; transform: scale(1.02); }
+        #grade-btn:active { transform: scale(0.98); }
+        
+        #results { text-align: center; font-size: 28px; font-weight: 800; margin-top: 25px; color: var(--accent); text-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
+        
+        .answer-key { background: var(--container-bg); padding: 25px; margin-top: 40px; border-top: 5px solid var(--accent); border-radius: var(--border-radius); display: none; }
+        .answer-key h2 { margin-top: 0; color: var(--accent); text-align: center; }
+        .grid-answers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; font-family: monospace; font-size: 1.1rem; color: var(--text-muted); }
+        .grid-answers p span { color: var(--text-main); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>Physical Chemistry Mock Test</h1>
+
+    <div class="question-container" data-ans="4">
+        <div class="question">1. The cell potential for the cell Zn | Zn<sup>2+</sup>(aq) || Sn<sup>x+</sup> | Sn is 0.801 V at 298 K. The reaction quotient is 10<sup>-2</sup>. Electrons involved = _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="1">
+        <div class="question">2. Which equation correctly represents the relationship between &Lambda;<sub>m</sub>, &Lambda;&deg;<sub>m</sub>, and concentration (C)?</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q2" value="1"> (1) &Lambda;<sub>m</sub> - &Lambda;&deg;<sub>m</sub> + A C<sup>1/2</sup> = 0</label></li>
+            <li><label><input type="radio" name="q2" value="2"> (2) &Lambda;<sub>m</sub><sup>2</sup> C - K<sub>a</sub> &Lambda;<sub>m</sub><sup>&deg;2</sup> + K<sub>a</sub> &Lambda;<sub>m</sub> &Lambda;&deg;<sub>m</sub> = 0</label></li>
+            <li><label><input type="radio" name="q2" value="3"> (3) &Lambda;<sub>m</sub><sup>2</sup> C + K<sub>a</sub> &Lambda;<sub>m</sub><sup>&deg;2</sup> - K<sub>a</sub> &Lambda;<sub>m</sub> &Lambda;&deg;<sub>m</sub> = 0</label></li>
+            <li><label><input type="radio" name="q2" value="4"> (4) &Lambda;<sub>m</sub> - &Lambda;&deg;<sub>m</sub> - A C<sup>1/2</sup> = 0</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">3. For a strong electrolyte, a plot of molar conductivity against sq. root of concentration is a straight line. Slope unit:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q3" value="1"> (1) mol<sup>-3/2</sup> L<sup>-1/2</sup> S cm<sup>2</sup></label></li>
+            <li><label><input type="radio" name="q3" value="2"> (2) mol<sup>-3/2</sup> L<sup>1/2</sup> S cm<sup>2</sup></label></li>
+            <li><label><input type="radio" name="q3" value="3"> (3) mol<sup>-3/2</sup> L S cm<sup>2</sup></label></li>
+            <li><label><input type="radio" name="q3" value="4"> (4) mol<sup>-1</sup> L<sup>1/2</sup></label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">4. For concentrated solution of weak electrolyte A<sub>2</sub>B<sub>3</sub> (conc. C), degree of dissociation &alpha; is:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q4" value="1"> (1) (K<sub>eq</sub> / 5c<sup>4</sup>)<sup>1/5</sup></label></li>
+            <li><label><input type="radio" name="q4" value="2"> (2) (K<sub>eq</sub> / 108c<sup>4</sup>)<sup>1/5</sup></label></li>
+            <li><label><input type="radio" name="q4" value="3"> (3) (K<sub>eq</sub> / 25c<sup>2</sup>)<sup>1/5</sup></label></li>
+            <li><label><input type="radio" name="q4" value="4"> (4) (K<sub>eq</sub> / 6c<sup>5</sup>)<sup>1/5</sup></label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="3">
+        <div class="question">5. At what pH will half-cell MnO<sub>4</sub><sup>-</sup>(0.1 M) | Mn<sup>2+</sup>(0.001 M) have potential of 1.282 V?</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="917">
+        <div class="question">6. At 298 K, solution with 10 mmol Cr<sub>2</sub>O<sub>7</sub><sup>2-</sup> and 100 mmol Cr<sup>3+</sup> has pH 3.0. Potential is x &times; 10<sup>-3</sup> V. x = _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="1">
+        <div class="question">7. For salt AB<sub>2</sub>, [A<sup>2+</sup>] = 1.2 &times; 10<sup>-4</sup> M and [B<sup>-</sup>] = 0.24 &times; 10<sup>-3</sup> M. K<sub>sp</sub> is:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q7" value="1"> (1) 6.91 &times; 10<sup>-12</sup></label></li>
+            <li><label><input type="radio" name="q7" value="2"> (2) 0.276 &times; 10<sup>-12</sup></label></li>
+            <li><label><input type="radio" name="q7" value="3"> (3) 27.65 &times; 10<sup>-12</sup></label></li>
+            <li><label><input type="radio" name="q7" value="4"> (4) 0.069 &times; 10<sup>-12</sup></label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="4">
+        <div class="question">8. K<sub>c</sub> for SO<sub>3</sub> &harr; SO<sub>2</sub> + &frac12;O<sub>2</sub> is 4.9 &times; 10<sup>-2</sup>. K<sub>c</sub> for 2SO<sub>2</sub> + O<sub>2</sub> &harr; 2SO<sub>3</sub> is:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q8" value="1"> (1) 4.9</label></li>
+            <li><label><input type="radio" name="q8" value="2"> (2) 49</label></li>
+            <li><label><input type="radio" name="q8" value="3"> (3) 41.6</label></li>
+            <li><label><input type="radio" name="q8" value="4"> (4) 416</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="5">
+        <div class="question">9. 25mL 0.050M Ba(NO<sub>3</sub>)<sub>2</sub> mixed with 25mL 0.020M NaF. K<sub>sp</sub> BaF<sub>2</sub> = 0.5 &times; 10<sup>-6</sup>. Ratio [Ba<sup>2+</sup>][F<sup>-</sup>]<sup>2</sup> / K<sub>sp</sub> = _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="3">
+        <div class="question">10. Correct option for: 2Au(CN)<sub>2</sub><sup>-</sup>(aq) + Zn(s) &rarr; 2Au(s) + Zn(CN)<sub>4</sub><sup>2-</sup>(aq)</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q10" value="1"> (1) A only (Redox)</label></li>
+            <li><label><input type="radio" name="q10" value="2"> (2) A and D only</label></li>
+            <li><label><input type="radio" name="q10" value="3"> (3) A and B only</label></li>
+            <li><label><input type="radio" name="q10" value="4"> (4) C and D only</label></li>
+        </ul>
+    </div>
+
+    <div class="question-container" data-ans="3">
+        <div class="question">11. 20 mL of 0.1 M NH<sub>4</sub>OH mixed with 40 mL of 0.05 M HCl. pH is nearest to:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q11" value="1"> (1) 3.2</label></li>
+            <li><label><input type="radio" name="q11" value="2"> (2) 4.2</label></li>
+            <li><label><input type="radio" name="q11" value="3"> (3) 5.2</label></li>
+            <li><label><input type="radio" name="q11" value="4"> (4) 6.2</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="18">
+        <div class="question">12. Hydrogen electrode in pH = 3 at 25&deg;C. Potential = - _____ &times; 10<sup>-2</sup> V.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="0">
+        <div class="question">13. Spin only magnetic moment of square planar [Pt(NH<sub>3</sub>)<sub>2</sub>Cl(NH<sub>2</sub>CH<sub>3</sub>)]Cl is _____ B.M.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="37">
+        <div class="question">14. M &rarr; N at 400 K, &Delta;H&deg; = 77.2 kJ/mol, &Delta;S&deg; = 122 J/K, logK is - _____ &times; 10<sup>-1</sup>.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="46">
+        <div class="question">15. Mass of zinc by electrolysis (0.015 A for 15 min) is _____ &times; 10<sup>-4</sup> g.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">16. N<sub>2</sub>O<sub>4</sub>(g) &harr; 2NO<sub>2</sub>(g), K<sub>p</sub> = 0.492 atm at 300 K. K<sub>c</sub> is _____ &times; 10<sup>-2</sup>.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">17. Current through AuCl<sub>4</sub><sup>-</sup> for 10 min, mass increase 1.314 g. Charge = _____ &times; 10<sup>-2</sup> F.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="417">
+        <div class="question">18. At 500K: [N<sub>2</sub>] = 0.02M, [H<sub>2</sub>] = 0.03M, [NH<sub>3</sub>] = 0.015M. Eq constant K is _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="9">
+        <div class="question">19. pH at which Mg(OH)<sub>2</sub> [K<sub>sp</sub> = 1&times;10<sup>-11</sup>] precipitates from 0.10 M Mg<sup>2+</sup> is _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="24">
+        <div class="question">20. Rate of 1st order reaction is 0.04 at 10 min and 0.03 at 20 min. Half life is _____ min.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+
+    <div class="question-container" data-ans="2">
+        <div class="question">21. E&deg; for ClO<sub>4</sub><sup>-</sup>: 1.19 V, IO<sub>4</sub><sup>-</sup>: 1.65 V, BrO<sub>4</sub><sup>-</sup>: 1.74 V. Oxidising power order:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q21" value="1"> (1) ClO<sub>4</sub><sup>-</sup> > IO<sub>4</sub><sup>-</sup> > BrO<sub>4</sub><sup>-</sup></label></li>
+            <li><label><input type="radio" name="q21" value="2"> (2) BrO<sub>4</sub><sup>-</sup> > IO<sub>4</sub><sup>-</sup> > ClO<sub>4</sub><sup>-</sup></label></li>
+            <li><label><input type="radio" name="q21" value="3"> (3) BrO<sub>4</sub><sup>-</sup> > ClO<sub>4</sub><sup>-</sup> > IO<sub>4</sub><sup>-</sup></label></li>
+            <li><label><input type="radio" name="q21" value="4"> (4) IO<sub>4</sub><sup>-</sup> > BrO<sub>4</sub><sup>-</sup> > ClO<sub>4</sub><sup>-</sup></label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="100">
+        <div class="question">22. Buffer of 1M benzoic acid (pK<sub>a</sub> = 4.20) & 1M sodium benzoate has pH 4.5. Vol of acid in 300mL is _____ mL.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="17">
+        <div class="question">23. 2N<sub>2</sub>O<sub>5</sub> &rarr; 4NO<sub>2</sub> + O<sub>2</sub>. N<sub>2</sub>O<sub>5</sub> drops from 3M to 2.75M in 30min. Rate of NO<sub>2</sub> formation is x &times; 10<sup>-3</sup>. x = _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">24. Identify the factor that does not affect electrolytic conductance.</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q24" value="1"> (1) Nature of electrolyte</label></li>
+            <li><label><input type="radio" name="q24" value="2"> (2) Nature of electrode used</label></li>
+            <li><label><input type="radio" name="q24" value="3"> (3) Concentration</label></li>
+            <li><label><input type="radio" name="q24" value="4"> (4) Nature of solvent</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="1">
+        <div class="question">25. Integrated rate law for 1st order gas reaction (P<sub>i</sub> = initial, P<sub>t</sub> = total):</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q25" value="1"> (1) k = (2.303 / t) log [P<sub>i</sub> / (2P<sub>i</sub> - P<sub>t</sub>)]</label></li>
+            <li><label><input type="radio" name="q25" value="2"> (2) k = (2.303 / t) log [2P<sub>i</sub> / (2P<sub>i</sub> - P<sub>t</sub>)]</label></li>
+            <li><label><input type="radio" name="q25" value="3"> (3) k = (2.303 / t) log [(2P<sub>i</sub> - P<sub>t</sub>) / P<sub>i</sub>]</label></li>
+            <li><label><input type="radio" name="q25" value="4"> (4) k = (2.303 / t) [P<sub>i</sub> / (2P<sub>i</sub> - P<sub>t</sub>)]</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="5">
+        <div class="question">26. One Faraday liberates x &times; 10<sup>-1</sup> gram atom of copper from CuSO<sub>4</sub>. x = _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="28">
+        <div class="question">27. Spin only magnetic moment for [Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup> is _____ &times; 10<sup>-1</sup> BM.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">28. A(g) &harr; B(g) + &frac12;C(g). Relationship between K<sub>P</sub>, &alpha; and P is:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q28" value="1"> (1) K<sub>P</sub> = (&alpha;<sup>1/2</sup>P<sup>1/2</sup>) / (2 + &alpha;<sup>1/2</sup>)</label></li>
+            <li><label><input type="radio" name="q28" value="2"> (2) K<sub>P</sub> = (&alpha;<sup>3/2</sup>P<sup>1/2</sup>) / [(2+&alpha;)<sup>1/2</sup>(1-&alpha;)]</label></li>
+            <li><label><input type="radio" name="q28" value="3"> (3) K<sub>P</sub> = (&alpha;<sup>1/2</sup>P<sup>1/2</sup>) / (2 + &alpha;<sup>3/2</sup>)</label></li>
+            <li><label><input type="radio" name="q28" value="4"> (4) K<sub>P</sub> = (&alpha;<sup>1/2</sup>P<sup>1/2</sup>) / (2 + &alpha;)<sup>1/2</sup></label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="8">
+        <div class="question">29. Moles of H<sup>+</sup> required by 1 mole MnO<sub>4</sub><sup>-</sup> to oxidise oxalate to CO<sub>2</sub> is _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="6">
+        <div class="question">30. In reaction of K<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub>, KCl, and conc H<sub>2</sub>SO<sub>4</sub>, oxidation state of Cr in product is + _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+
+    <div class="question-container" data-ans="17190">
+        <div class="question">31. <sup>14</sup>C/<sup>12</sup>C in wood is 1/8 of atmosphere. Half life = 5730 yrs. Age = _____ yrs.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="7">
+        <div class="question">32. K<sub>a</sub> (CH<sub>3</sub>COOH) = 1.8&times;10<sup>-5</sup>, K<sub>b</sub> (NH<sub>4</sub>OH) = 1.8&times;10<sup>-5</sup>. pH of ammonium acetate is _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="1.93">
+        <div class="question">33. Electricity in C required for oxidation of 1 mol H<sub>2</sub>O to O<sub>2</sub> is _____ &times; 10<sup>5</sup> C.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="339">
+        <div class="question">34. MnO<sub>4</sub><sup>-</sup> + H<sup>+</sup> + H<sub>2</sub>C<sub>2</sub>O<sub>4</sub> &harr; Mn<sup>2+</sup> + H<sub>2</sub>O + CO<sub>2</sub>. E&deg; = 1.51V & -0.49V. K<sub>eq</sub> = 10<sup>x</sup>. x = _____.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">35. Solubility of Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> (Mass M) is W g/100mL. K<sub>sp</sub> approx:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q35" value="1"> (1) 10<sup>7</sup> W<sup>3</sup>/M<sup>3</sup></label></li>
+            <li><label><input type="radio" name="q35" value="2"> (2) 10<sup>7</sup> W<sup>5</sup>/M<sup>5</sup></label></li>
+            <li><label><input type="radio" name="q35" value="3"> (3) 10<sup>3</sup> W<sup>5</sup>/M<sup>5</sup></label></li>
+            <li><label><input type="radio" name="q35" value="4"> (4) 10<sup>5</sup> W<sup>5</sup>/M<sup>5</sup></label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="4">
+        <div class="question">36. What pressure (bar) of H<sub>2</sub> makes emf of hydrogen electrode zero in pure water at 25&deg;C?</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q36" value="1"> (1) 10<sup>-7</sup></label></li>
+            <li><label><input type="radio" name="q36" value="2"> (2) 0.5</label></li>
+            <li><label><input type="radio" name="q36" value="3"> (3) 1</label></li>
+            <li><label><input type="radio" name="q36" value="4"> (4) 10<sup>-14</sup></label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="1">
+        <div class="question">37. Decreasing order of basic strength of conjugate bases: <sup>-</sup>OH, R&Omacr;, CH<sub>3</sub>CO&Omacr;, C&Iscr;&Omacr;:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q37" value="1"> (1) R&Omacr; > <sup>-</sup>OH > CH<sub>3</sub>CO&Omacr; > C&Iscr;&Omacr;</label></li>
+            <li><label><input type="radio" name="q37" value="2"> (2) C&Iscr;&Omacr; > R&Omacr; > <sup>-</sup>OH > CH<sub>3</sub>CO&Omacr;</label></li>
+            <li><label><input type="radio" name="q37" value="3"> (3) <sup>-</sup>OH > R&Omacr; > CH<sub>3</sub>CO&Omacr; > C&Iscr;&Omacr;</label></li>
+            <li><label><input type="radio" name="q37" value="4"> (4) C&Iscr;&Omacr; > <sup>-</sup>OH > R&Omacr; > CH<sub>3</sub>CO&Omacr;</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">38. Plot of molar conductivity vs (conc)<sup>1/2</sup> for strong electrolyte. Unit for the slope is:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q38" value="1"> (1) S cm<sup>2</sup> mol<sup>-3/2</sup> L<sup>-1/2</sup></label></li>
+            <li><label><input type="radio" name="q38" value="2"> (2) S cm<sup>2</sup> mol<sup>-3/2</sup> L<sup>1/2</sup></label></li>
+            <li><label><input type="radio" name="q38" value="3"> (3) S cm<sup>2</sup> mol<sup>-3/2</sup> L</label></li>
+            <li><label><input type="radio" name="q38" value="4"> (4) S cm<sup>2</sup> mol<sup>-1</sup> L<sup>1/2</sup></label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">39. Fuel cell (H<sub>2</sub>/O<sub>2</sub>): A. Used in spaceship B. 40% efficiency C. Uses Al catalyst D. Eco-friendly E. Type of Galvanic cell. Correct:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q39" value="1"> (1) A, B, D, E only</label></li>
+            <li><label><input type="radio" name="q39" value="2"> (2) A, D, E only</label></li>
+            <li><label><input type="radio" name="q39" value="3"> (3) A, B, D only</label></li>
+            <li><label><input type="radio" name="q39" value="4"> (4) A, B, C only</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">40. Reaction at cathode in cells commonly used in clocks involves:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q40" value="1"> (1) reduction of Mn from +7 to +2</label></li>
+            <li><label><input type="radio" name="q40" value="2"> (2) reduction of Mn from +4 to +3</label></li>
+            <li><label><input type="radio" name="q40" value="3"> (3) oxidation of Mn from +3 to +4</label></li>
+            <li><label><input type="radio" name="q40" value="4"> (4) oxidation of Mn from +2 to +7</label></li>
+        </ul>
+    </div>
+
+    <div class="question-container" data-ans="3">
+        <div class="question">41. Ionic conductivities of divalent cation & anion are 57 and 73 S cm<sup>2</sup> mol<sup>-1</sup>. Molar conductivity is:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q41" value="1"> (1) 187</label></li>
+            <li><label><input type="radio" name="q41" value="2"> (2) 260</label></li>
+            <li><label><input type="radio" name="q41" value="3"> (3) 130</label></li>
+            <li><label><input type="radio" name="q41" value="4"> (4) 65</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="3">
+        <div class="question">42. Fe<sub>2</sub>O<sub>3</sub>(s) + 3CO(g) &harr; 2Fe(l) + 3CO<sub>2</sub>(g). Which will not disturb equilibrium?</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q42" value="1"> (1) Addition of CO<sub>2</sub></label></li>
+            <li><label><input type="radio" name="q42" value="2"> (2) Removal of CO<sub>2</sub></label></li>
+            <li><label><input type="radio" name="q42" value="3"> (3) Addition of Fe<sub>2</sub>O<sub>3</sub></label></li>
+            <li><label><input type="radio" name="q42" value="4"> (4) Removal of CO</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="3">
+        <div class="question">43. Kinetic study 2A + B &rarr; C + D. Rate [0.1][0.1]=6e-3. Rate [0.4][0.1]=2.4e-2. Rate [0.3][0.2]=7.2e-2. Rate [0.3][0.4]=2.88e-1. Overall order is:</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">44. Quantity of silver deposited when one coulomb charge is passed:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q44" value="1"> (1) 1 g of silver</label></li>
+            <li><label><input type="radio" name="q44" value="2"> (2) 1 electrochemical equivalent</label></li>
+            <li><label><input type="radio" name="q44" value="3"> (3) 1 chemical equivalent</label></li>
+            <li><label><input type="radio" name="q44" value="4"> (4) 0.1 g atom</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="4">
+        <div class="question">45. For the electro chemical cell, if E&deg;<sub>(M<sup>2+</sup>/M)</sub> = 0.46 V and E&deg;<sub>(X/X<sup>2-</sup>)</sub> = 0.34 V. Which of the following is correct?</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q45" value="1"> (1) M + X &rarr; M<sup>2+</sup> + X<sup>2-</sup> is spontaneous</label></li>
+            <li><label><input type="radio" name="q45" value="2"> (2) E<sub>cell</sub> = 0.80 V</label></li>
+            <li><label><input type="radio" name="q45" value="3"> (3) E<sub>cell</sub> = -0.80 V</label></li>
+            <li><label><input type="radio" name="q45" value="4"> (4) M<sup>2+</sup> + X<sup>2-</sup> &rarr; M + X is spontaneous</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="315">
+        <div class="question">46. Consider gas reaction 2A<sub>(g)</sub> + B<sub>(g)</sub> &rarr; C<sub>(g)</sub>. Initial rate r<sub>1</sub> when P<sub>A</sub> = 1.5 atm, P<sub>B</sub> = 0.7 atm. Later rate r<sub>2</sub> when P<sub>C</sub> = 0.5 atm. Ratio r<sub>1</sub> : r<sub>2</sub> is _____ &times; 10<sup>-1</sup>.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="2">
+        <div class="question">47. At -20&deg;C, 1 atm, a cylinder is filled with equal molecules of H<sub>2</sub>, I<sub>2</sub>, and HI for reaction H<sub>2(g)</sub> + I<sub>2(g)</sub> &harr; 2HI<sub>(g)</sub>. K<sub>p</sub> is x &times; 10<sup>-1</sup>. The value of x is:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q47" value="1"> (1) 0.01</label></li>
+            <li><label><input type="radio" name="q47" value="2"> (2) 10</label></li>
+            <li><label><input type="radio" name="q47" value="3"> (3) 2</label></li>
+            <li><label><input type="radio" name="q47" value="4"> (4) 1</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="76">
+        <div class="question">48. Dissociation of weak acid: HX<sub>(aq)</sub> &harr; H<sup>+</sup><sub>(aq)</sub> + X<sup>-</sup><sub>(aq)</sub>, K<sub>a</sub> = 1.2 &times; 10<sup>-5</sup>. Osmotic pressure of 0.03 M HX at 300 K is _____ &times; 10<sup>-2</sup> bar.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="6">
+        <div class="question">49. Difference in 'spin-only' magnetic moment values of KMnO<sub>4</sub> and the manganese product formed during its titration against oxalic acid in acidic medium is _____ BM.</div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+
+    <div class="question-container" data-ans="3">
+        <div class="question">50. How can an electrochemical cell be converted into an electrolytic cell?</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q50" value="1"> (1) Applying an external opposite potential lower than E&deg; cell.</label></li>
+            <li><label><input type="radio" name="q50" value="2"> (2) Reversing the flow of ions in salt bridge.</label></li>
+            <li><label><input type="radio" name="q50" value="3"> (3) Applying an external opposite potential greater than E&deg; cell.</label></li>
+            <li><label><input type="radio" name="q50" value="4"> (4) Exchanging the electrodes at anode and cathode.</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="1">
+        <div class="question">51. The ratio K<sub>P</sub>/K<sub>C</sub> for the reaction : CO<sub>(g)</sub> + &frac12;O<sub>2(g)</sub> &harr; CO<sub>2(g)</sub> is :</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q51" value="1"> (1) 1/&radic;(RT)</label></li>
+            <li><label><input type="radio" name="q51" value="2"> (2) (RT)<sup>1/2</sup></label></li>
+            <li><label><input type="radio" name="q51" value="3"> (3) RT</label></li>
+            <li><label><input type="radio" name="q51" value="4"> (4) 1</label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="5">
+        <div class="question">52. A solution containing 10 g of an electrolyte AB<sub>2</sub> in 100 g of water boils at 100.52&deg;C. The degree of ionization of the electrolyte (&alpha;) is _____ &times; 10<sup>-1</sup>. (nearest integer)<br><small>[Given : Molar mass of AB<sub>2</sub> = 200 g mol<sup>-1</sup>, K<sub>b</sub> (water) = 0.52 K kg mol<sup>-1</sup>, boiling point of water = 100&deg;C; AB<sub>2</sub> ionises as AB<sub>2</sub> &rarr; A<sup>2+</sup> + 2B<sup>-</sup>]</small></div>
+        <input type="text" placeholder="Your Answer">
+    </div>
+    <div class="question-container" data-ans="3">
+        <div class="question">53. Let y = y(x) be the solution of the differential equation<br>(1 + y<sup>2</sup>)e<sup>tan x</sup> dx + cos<sup>2</sup> x (1 + e<sup>2tan x</sup>)dy = 0, y(0) = 1. Then y(&pi;/4) is equal to:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q53" value="1"> (1) 2/e</label></li>
+            <li><label><input type="radio" name="q53" value="2"> (2) 2/e<sup>2</sup></label></li>
+            <li><label><input type="radio" name="q53" value="3"> (3) 1/e</label></li>
+            <li><label><input type="radio" name="q53" value="4"> (4) 1/e<sup>2</sup></label></li>
+        </ul>
+    </div>
+    <div class="question-container" data-ans="4">
+        <div class="question">54. Iron (III) catalyses the reaction between iodide and persulphate ions, in which:<br>A. Fe<sup>3+</sup> oxidises the iodide ion<br>B. Fe<sup>3+</sup> oxidises the persulphate ion<br>C. Fe<sup>2+</sup> reduces the iodide ion<br>D. Fe<sup>2+</sup> reduces the persulphate ion<br>Choose the most appropriate answer:</div>
+        <ul class="options">
+            <li><label><input type="radio" name="q54" value="1"> (1) B only</label></li>
+            <li><label><input type="radio" name="q54" value="2"> (2) A only</label></li>
+            <li><label><input type="radio" name="q54" value="3"> (3) B and C only</label></li>
+            <li><label><input type="radio" name="q54" value="4"> (4) A and D only</label></li>
+        </ul>
+    </div>
+
+    <button id="grade-btn" onclick="gradeQuiz()">Grade My Quiz</button>
+    <div id="results"></div>
+
+    <div class="answer-key" id="answer-key">
+        <h2>Answer Key</h2>
+        <div class="grid-answers">
+            <p>1: <span>4</span></p><p>2: <span>(1)</span></p><p>3: <span>(2)</span></p><p>4: <span>(2)</span></p><p>5: <span>3</span></p>
+            <p>6: <span>917</span></p><p>7: <span>(1)</span></p><p>8: <span>(4)</span></p><p>9: <span>5</span></p><p>10: <span>(3)</span></p>
+            <p>11: <span>(3)</span></p><p>12: <span>18</span></p><p>13: <span>0</span></p><p>14: <span>37</span></p><p>15: <span>46</span></p>
+            <p>16: <span>2</span></p><p>17: <span>2</span></p><p>18: <span>417</span></p><p>19: <span>9</span></p><p>20: <span>24</span></p>
+            <p>21: <span>(2)</span></p><p>22: <span>100</span></p><p>23: <span>17</span></p><p>24: <span>(2)</span></p><p>25: <span>(1)</span></p>
+            <p>26: <span>5</span></p><p>27: <span>28</span></p><p>28: <span>(2)</span></p><p>29: <span>8</span></p><p>30: <span>6</span></p>
+            <p>31: <span>17190</span></p><p>32: <span>7</span></p><p>33: <span>1.93</span></p><p>34: <span>339</span></p><p>35: <span>(2)</span></p>
+            <p>36: <span>(4)</span></p><p>37: <span>(1)</span></p><p>38: <span>(2)</span></p><p>39: <span>(2)</span></p><p>40: <span>(2)</span></p>
+            <p>41: <span>(3)</span></p><p>42: <span>(3)</span></p><p>43: <span>3</span></p><p>44: <span>(2)</span></p><p>45: <span>(4)</span></p>
+            <p>46: <span>315</span></p><p>47: <span>(2)</span></p><p>48: <span>76</span></p><p>49: <span>6</span></p><p>50: <span>(3)</span></p>
+            <p>51: <span>(1)</span></p><p>52: <span>5</span></p><p>53: <span>(3)</span></p><p>54: <span>(4)</span></p>
+        </div>
+    </div>
+
+    <script>
+        function gradeQuiz() {
+            let score = 0;
+            const total = 54;
+            const containers = document.querySelectorAll('.question-container');
+
+            containers.forEach(container => {
+                const correctAnswer = container.getAttribute('data-ans').toLowerCase().trim();
+                const input = container.querySelector('input[type="text"]');
+                const radios = container.querySelectorAll('input[type="radio"]');
+                
+                // Reset styling
+                container.classList.remove('correct', 'incorrect');
+                
+                let userAnswer = "";
+                
+                if (input) {
+                    userAnswer = input.value.toLowerCase().trim();
+                } else if (radios.length > 0) {
+                    radios.forEach(radio => {
+                        if (radio.checked) userAnswer = radio.value;
+                    });
+                }
+
+                if (userAnswer === correctAnswer) {
+                    container.classList.add('correct');
+                    score++;
+                } else {
+                    container.classList.add('incorrect');
+                }
+            });
+
+            document.getElementById('results').innerText = `You scored ${score} out of ${total}!`;
+            document.getElementById('answer-key').style.display = 'block';
+            
+            // Smooth scroll to the result text
+            setTimeout(() => {
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+    </script>
+</body>
+</html>
