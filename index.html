@@ -3,465 +3,392 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physical Chemistry Mock Test - Cyber Dark Edition</title>
+    <title>NTA CBT Mock Test</title>
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --container-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #38bdf8;
-            --correct: #22c55e;
-            --incorrect: #ef4444;
-            --border-radius: 12px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #f2f2f2; height: 100vh; display: flex; flex-direction: column; }
+        
+        /* Header */
+        header { background-color: #3b5998; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: bold; }
+        .timer { background: #ff4d4d; padding: 5px 15px; border-radius: 5px; }
 
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.6; }
-        h1 { text-align: center; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        /* Main Layout */
+        .container { display: flex; flex: 1; overflow: hidden; }
         
-        .question-container { background: var(--container-bg); padding: 20px; margin-bottom: 20px; border-radius: var(--border-radius); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5); border: 1px solid transparent; transition: all 0.3s ease; }
-        .question-container:hover { border-color: #334155; transform: translateY(-2px); }
-        .question { font-weight: 600; margin-bottom: 15px; font-size: 1.05rem; }
+        /* Left Panel - Question Area */
+        .left-panel { flex: 3; display: flex; flex-direction: column; background: white; margin: 10px; border: 1px solid #ccc; border-top: 3px solid #3b5998; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .question-header { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; font-size: 16px; background: #fafafa; }
+        .question-body { padding: 20px; overflow-y: auto; flex: 1; font-size: 16px; line-height: 1.6; }
+        .options { margin-top: 20px; }
+        .option-lbl { display: block; margin-bottom: 15px; cursor: pointer; padding: 10px; border: 1px solid #ddd; border-radius: 4px; transition: 0.2s; }
+        .option-lbl:hover { background: #f0f8ff; border-color: #3b5998; }
+        .option-lbl input { margin-right: 10px; transform: scale(1.2); cursor: pointer; }
         
-        .options { list-style-type: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .options label { cursor: pointer; display: flex; align-items: center; background: #0f172a; padding: 10px; border-radius: 8px; border: 1px solid #334155; transition: border-color 0.2s; }
-        .options label:hover { border-color: var(--accent); }
-        .options input[type="radio"] { margin-right: 10px; accent-color: var(--accent); }
-        
-        input[type="text"] { padding: 12px; width: 150px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: var(--text-main); font-size: 1rem; outline: none; transition: border-color 0.2s; }
-        input[type="text"]:focus { border-color: var(--accent); box-shadow: 0 0 8px rgba(56, 189, 248, 0.3); }
+        /* Left Panel - Footer/Actions */
+        .action-buttons { padding: 15px; background: #f9f9f9; border-top: 1px solid #ddd; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .btn { padding: 10px 15px; border: none; color: white; cursor: pointer; font-size: 14px; font-weight: bold; border-radius: 3px; }
+        .btn-save { background-color: #5cb85c; }
+        .btn-save:hover { background-color: #4cae4c; }
+        .btn-review { background-color: #f0ad4e; }
+        .btn-review:hover { background-color: #eea236; }
+        .btn-clear { background-color: #d9534f; }
+        .btn-clear:hover { background-color: #c9302c; }
 
-        .correct { border: 2px solid var(--correct) !important; background-color: rgba(34, 197, 94, 0.05); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
-        .incorrect { border: 2px solid var(--incorrect) !important; background-color: rgba(239, 68, 68, 0.05); box-shadow: 0 0 15px rgba(239, 68, 68, 0.2); }
+        /* Right Panel - Palette */
+        .right-panel { flex: 1; background: white; margin: 10px 10px 10px 0; border: 1px solid #ccc; border-top: 3px solid #3b5998; display: flex; flex-direction: column; box-shadow: 0 0 5px rgba(0,0,0,0.1); max-width: 350px;}
+        .profile { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #eee; }
+        .profile img { width: 60px; height: 60px; border-radius: 50%; margin-right: 15px; background: #ddd; }
         
-        #grade-btn { display: block; width: 100%; padding: 18px; font-size: 20px; color: var(--bg-color); background-color: var(--accent); border: none; border-radius: var(--border-radius); cursor: pointer; margin-top: 30px; font-weight: bold; text-transform: uppercase; transition: background 0.3s, transform 0.1s; }
-        #grade-btn:hover { background-color: #0ea5e9; transform: scale(1.02); }
-        #grade-btn:active { transform: scale(0.98); }
+        .palette-legend { padding: 10px; border-bottom: 1px solid #eee; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; }
+        .legend-item { display: flex; align-items: center; }
+        .box { width: 25px; height: 25px; display: inline-flex; justify-content: center; align-items: center; color: white; font-weight: bold; margin-right: 8px; border-radius: 4px; font-size: 12px;}
         
-        #results { text-align: center; font-size: 28px; font-weight: 800; margin-top: 25px; color: var(--accent); text-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
+        .status-0 { background: #e0e0e0; color: #333; } /* Not Visited */
+        .status-1 { background: #d9534f; clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%); height: 30px;} /* Not Answered */
+        .status-2 { background: #5cb85c; clip-path: polygon(50% 0%, 100% 20%, 100% 100%, 0 100%, 0 20%); height: 30px;} /* Answered */
+        .status-3 { background: #5bc0de; border-radius: 50%; width: 30px; height: 30px; } /* Marked for Review */
+        .status-4 { background: #5bc0de; border-radius: 50%; width: 30px; height: 30px; position: relative; } /* Answered & Marked */
+        .status-4::after { content: ''; position: absolute; bottom: 2px; right: 2px; width: 8px; height: 8px; background: #5cb85c; border-radius: 50%; }
+
+        .palette-grid-container { padding: 15px; overflow-y: auto; flex: 1; }
+        .palette-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .q-btn { width: 100%; height: 40px; cursor: pointer; border: 1px solid #ccc; background: #e0e0e0; font-weight: bold; display: flex; justify-content: center; align-items: center; transition: 0.2s; border-radius: 4px;}
+        .q-btn:hover { opacity: 0.8; }
         
-        .answer-key { background: var(--container-bg); padding: 25px; margin-top: 40px; border-top: 5px solid var(--accent); border-radius: var(--border-radius); display: none; }
-        .answer-key h2 { margin-top: 0; color: var(--accent); text-align: center; }
-        .grid-answers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; font-family: monospace; font-size: 1.1rem; color: var(--text-muted); }
-        .grid-answers p span { color: var(--text-main); font-weight: bold; }
+        .submit-btn-container { padding: 15px; border-top: 1px solid #eee; }
+        .btn-submit-test { background: #3b5998; width: 100%; padding: 12px; }
+
+        /* Results Screen */
+        #result-screen { display: none; padding: 40px; text-align: center; background: white; height: 100%; }
+        #result-screen h2 { color: #3b5998; margin-bottom: 20px; font-size: 28px;}
+        .score-card { font-size: 20px; margin-bottom: 20px; padding: 20px; background: #f0f8ff; border: 1px solid #3b5998; display: inline-block; border-radius: 8px;}
     </style>
 </head>
 <body>
 
-    <h1>Physical Chemistry Mock Test</h1>
+    <header>
+        <div>NTA MOCK TEST - PHYSICAL CHEMISTRY</div>
+        <div class="timer" id="timer">Time Left: 60:00</div>
+    </header>
 
-    <div class="question-container" data-ans="4">
-        <div class="question">1. The cell potential for the cell Zn | Zn<sup>2+</sup>(aq) || Sn<sup>x+</sup> | Sn is 0.801 V at 298 K. The reaction quotient is 10<sup>-2</sup>. Electrons involved = _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="1">
-        <div class="question">2. Which equation correctly represents the relationship between &Lambda;<sub>m</sub>, &Lambda;&deg;<sub>m</sub>, and concentration (C)?</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q2" value="1"> (1) &Lambda;<sub>m</sub> - &Lambda;&deg;<sub>m</sub> + A C<sup>1/2</sup> = 0</label></li>
-            <li><label><input type="radio" name="q2" value="2"> (2) &Lambda;<sub>m</sub><sup>2</sup> C - K<sub>a</sub> &Lambda;<sub>m</sub><sup>&deg;2</sup> + K<sub>a</sub> &Lambda;<sub>m</sub> &Lambda;&deg;<sub>m</sub> = 0</label></li>
-            <li><label><input type="radio" name="q2" value="3"> (3) &Lambda;<sub>m</sub><sup>2</sup> C + K<sub>a</sub> &Lambda;<sub>m</sub><sup>&deg;2</sup> - K<sub>a</sub> &Lambda;<sub>m</sub> &Lambda;&deg;<sub>m</sub> = 0</label></li>
-            <li><label><input type="radio" name="q2" value="4"> (4) &Lambda;<sub>m</sub> - &Lambda;&deg;<sub>m</sub> - A C<sup>1/2</sup> = 0</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">3. For a strong electrolyte, a plot of molar conductivity against sq. root of concentration is a straight line. Slope unit:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q3" value="1"> (1) mol<sup>-3/2</sup> L<sup>-1/2</sup> S cm<sup>2</sup></label></li>
-            <li><label><input type="radio" name="q3" value="2"> (2) mol<sup>-3/2</sup> L<sup>1/2</sup> S cm<sup>2</sup></label></li>
-            <li><label><input type="radio" name="q3" value="3"> (3) mol<sup>-3/2</sup> L S cm<sup>2</sup></label></li>
-            <li><label><input type="radio" name="q3" value="4"> (4) mol<sup>-1</sup> L<sup>1/2</sup></label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">4. For concentrated solution of weak electrolyte A<sub>2</sub>B<sub>3</sub> (conc. C), degree of dissociation &alpha; is:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q4" value="1"> (1) (K<sub>eq</sub> / 5c<sup>4</sup>)<sup>1/5</sup></label></li>
-            <li><label><input type="radio" name="q4" value="2"> (2) (K<sub>eq</sub> / 108c<sup>4</sup>)<sup>1/5</sup></label></li>
-            <li><label><input type="radio" name="q4" value="3"> (3) (K<sub>eq</sub> / 25c<sup>2</sup>)<sup>1/5</sup></label></li>
-            <li><label><input type="radio" name="q4" value="4"> (4) (K<sub>eq</sub> / 6c<sup>5</sup>)<sup>1/5</sup></label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="3">
-        <div class="question">5. At what pH will half-cell MnO<sub>4</sub><sup>-</sup>(0.1 M) | Mn<sup>2+</sup>(0.001 M) have potential of 1.282 V?</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="917">
-        <div class="question">6. At 298 K, solution with 10 mmol Cr<sub>2</sub>O<sub>7</sub><sup>2-</sup> and 100 mmol Cr<sup>3+</sup> has pH 3.0. Potential is x &times; 10<sup>-3</sup> V. x = _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="1">
-        <div class="question">7. For salt AB<sub>2</sub>, [A<sup>2+</sup>] = 1.2 &times; 10<sup>-4</sup> M and [B<sup>-</sup>] = 0.24 &times; 10<sup>-3</sup> M. K<sub>sp</sub> is:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q7" value="1"> (1) 6.91 &times; 10<sup>-12</sup></label></li>
-            <li><label><input type="radio" name="q7" value="2"> (2) 0.276 &times; 10<sup>-12</sup></label></li>
-            <li><label><input type="radio" name="q7" value="3"> (3) 27.65 &times; 10<sup>-12</sup></label></li>
-            <li><label><input type="radio" name="q7" value="4"> (4) 0.069 &times; 10<sup>-12</sup></label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="4">
-        <div class="question">8. K<sub>c</sub> for SO<sub>3</sub> &harr; SO<sub>2</sub> + &frac12;O<sub>2</sub> is 4.9 &times; 10<sup>-2</sup>. K<sub>c</sub> for 2SO<sub>2</sub> + O<sub>2</sub> &harr; 2SO<sub>3</sub> is:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q8" value="1"> (1) 4.9</label></li>
-            <li><label><input type="radio" name="q8" value="2"> (2) 49</label></li>
-            <li><label><input type="radio" name="q8" value="3"> (3) 41.6</label></li>
-            <li><label><input type="radio" name="q8" value="4"> (4) 416</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="5">
-        <div class="question">9. 25mL 0.050M Ba(NO<sub>3</sub>)<sub>2</sub> mixed with 25mL 0.020M NaF. K<sub>sp</sub> BaF<sub>2</sub> = 0.5 &times; 10<sup>-6</sup>. Ratio [Ba<sup>2+</sup>][F<sup>-</sup>]<sup>2</sup> / K<sub>sp</sub> = _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="3">
-        <div class="question">10. Correct option for: 2Au(CN)<sub>2</sub><sup>-</sup>(aq) + Zn(s) &rarr; 2Au(s) + Zn(CN)<sub>4</sub><sup>2-</sup>(aq)</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q10" value="1"> (1) A only (Redox)</label></li>
-            <li><label><input type="radio" name="q10" value="2"> (2) A and D only</label></li>
-            <li><label><input type="radio" name="q10" value="3"> (3) A and B only</label></li>
-            <li><label><input type="radio" name="q10" value="4"> (4) C and D only</label></li>
-        </ul>
-    </div>
+    <div class="container" id="test-screen">
+        <div class="left-panel">
+            <div class="question-header">
+                <span id="q-no">Question No. 1</span>
+            </div>
+            <div class="question-body">
+                <div id="question-text" style="font-weight: bold; margin-bottom: 15px;">Loading question...</div>
+                <div class="options" id="options-container">
+                    </div>
+            </div>
+            <div class="action-buttons">
+                <div>
+                    <button class="btn btn-save" onclick="saveAndNext()">Save & Next</button>
+                    <button class="btn btn-clear" onclick="clearResponse()">Clear Response</button>
+                </div>
+                <div>
+                    <button class="btn btn-review" onclick="markForReviewAndNext()">Mark for Review & Next</button>
+                </div>
+            </div>
+        </div>
 
-    <div class="question-container" data-ans="3">
-        <div class="question">11. 20 mL of 0.1 M NH<sub>4</sub>OH mixed with 40 mL of 0.05 M HCl. pH is nearest to:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q11" value="1"> (1) 3.2</label></li>
-            <li><label><input type="radio" name="q11" value="2"> (2) 4.2</label></li>
-            <li><label><input type="radio" name="q11" value="3"> (3) 5.2</label></li>
-            <li><label><input type="radio" name="q11" value="4"> (4) 6.2</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="18">
-        <div class="question">12. Hydrogen electrode in pH = 3 at 25&deg;C. Potential = - _____ &times; 10<sup>-2</sup> V.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="0">
-        <div class="question">13. Spin only magnetic moment of square planar [Pt(NH<sub>3</sub>)<sub>2</sub>Cl(NH<sub>2</sub>CH<sub>3</sub>)]Cl is _____ B.M.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="37">
-        <div class="question">14. M &rarr; N at 400 K, &Delta;H&deg; = 77.2 kJ/mol, &Delta;S&deg; = 122 J/K, logK is - _____ &times; 10<sup>-1</sup>.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="46">
-        <div class="question">15. Mass of zinc by electrolysis (0.015 A for 15 min) is _____ &times; 10<sup>-4</sup> g.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">16. N<sub>2</sub>O<sub>4</sub>(g) &harr; 2NO<sub>2</sub>(g), K<sub>p</sub> = 0.492 atm at 300 K. K<sub>c</sub> is _____ &times; 10<sup>-2</sup>.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">17. Current through AuCl<sub>4</sub><sup>-</sup> for 10 min, mass increase 1.314 g. Charge = _____ &times; 10<sup>-2</sup> F.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="417">
-        <div class="question">18. At 500K: [N<sub>2</sub>] = 0.02M, [H<sub>2</sub>] = 0.03M, [NH<sub>3</sub>] = 0.015M. Eq constant K is _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="9">
-        <div class="question">19. pH at which Mg(OH)<sub>2</sub> [K<sub>sp</sub> = 1&times;10<sup>-11</sup>] precipitates from 0.10 M Mg<sup>2+</sup> is _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="24">
-        <div class="question">20. Rate of 1st order reaction is 0.04 at 10 min and 0.03 at 20 min. Half life is _____ min.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
+        <div class="right-panel">
+            <div class="profile">
+                <img src="https://via.placeholder.com/60?text=Candidate" alt="Profile">
+                <div>
+                    <div style="font-weight: bold; font-size: 16px;">Candidate Name</div>
+                    <div style="font-size: 12px; color: #666;">Subject: Chemistry</div>
+                </div>
+            </div>
+            
+            <div class="palette-legend">
+                <div class="legend-item"><span class="box status-0" id="count-0">0</span> Not Visited</div>
+                <div class="legend-item"><span class="box status-1" id="count-1">0</span> Not Answered</div>
+                <div class="legend-item"><span class="box status-2" id="count-2">0</span> Answered</div>
+                <div class="legend-item"><span class="box status-3" id="count-3">0</span> Marked for Review</div>
+                <div class="legend-item" style="grid-column: span 2;"><span class="box status-4" id="count-4">0</span> Answered & Marked for Review (will be considered for evaluation)</div>
+            </div>
 
-    <div class="question-container" data-ans="2">
-        <div class="question">21. E&deg; for ClO<sub>4</sub><sup>-</sup>: 1.19 V, IO<sub>4</sub><sup>-</sup>: 1.65 V, BrO<sub>4</sub><sup>-</sup>: 1.74 V. Oxidising power order:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q21" value="1"> (1) ClO<sub>4</sub><sup>-</sup> > IO<sub>4</sub><sup>-</sup> > BrO<sub>4</sub><sup>-</sup></label></li>
-            <li><label><input type="radio" name="q21" value="2"> (2) BrO<sub>4</sub><sup>-</sup> > IO<sub>4</sub><sup>-</sup> > ClO<sub>4</sub><sup>-</sup></label></li>
-            <li><label><input type="radio" name="q21" value="3"> (3) BrO<sub>4</sub><sup>-</sup> > ClO<sub>4</sub><sup>-</sup> > IO<sub>4</sub><sup>-</sup></label></li>
-            <li><label><input type="radio" name="q21" value="4"> (4) IO<sub>4</sub><sup>-</sup> > BrO<sub>4</sub><sup>-</sup> > ClO<sub>4</sub><sup>-</sup></label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="100">
-        <div class="question">22. Buffer of 1M benzoic acid (pK<sub>a</sub> = 4.20) & 1M sodium benzoate has pH 4.5. Vol of acid in 300mL is _____ mL.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="17">
-        <div class="question">23. 2N<sub>2</sub>O<sub>5</sub> &rarr; 4NO<sub>2</sub> + O<sub>2</sub>. N<sub>2</sub>O<sub>5</sub> drops from 3M to 2.75M in 30min. Rate of NO<sub>2</sub> formation is x &times; 10<sup>-3</sup>. x = _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">24. Identify the factor that does not affect electrolytic conductance.</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q24" value="1"> (1) Nature of electrolyte</label></li>
-            <li><label><input type="radio" name="q24" value="2"> (2) Nature of electrode used</label></li>
-            <li><label><input type="radio" name="q24" value="3"> (3) Concentration</label></li>
-            <li><label><input type="radio" name="q24" value="4"> (4) Nature of solvent</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="1">
-        <div class="question">25. Integrated rate law for 1st order gas reaction (P<sub>i</sub> = initial, P<sub>t</sub> = total):</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q25" value="1"> (1) k = (2.303 / t) log [P<sub>i</sub> / (2P<sub>i</sub> - P<sub>t</sub>)]</label></li>
-            <li><label><input type="radio" name="q25" value="2"> (2) k = (2.303 / t) log [2P<sub>i</sub> / (2P<sub>i</sub> - P<sub>t</sub>)]</label></li>
-            <li><label><input type="radio" name="q25" value="3"> (3) k = (2.303 / t) log [(2P<sub>i</sub> - P<sub>t</sub>) / P<sub>i</sub>]</label></li>
-            <li><label><input type="radio" name="q25" value="4"> (4) k = (2.303 / t) [P<sub>i</sub> / (2P<sub>i</sub> - P<sub>t</sub>)]</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="5">
-        <div class="question">26. One Faraday liberates x &times; 10<sup>-1</sup> gram atom of copper from CuSO<sub>4</sub>. x = _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="28">
-        <div class="question">27. Spin only magnetic moment for [Ni(NH<sub>3</sub>)<sub>6</sub>]<sup>2+</sup> is _____ &times; 10<sup>-1</sup> BM.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">28. A(g) &harr; B(g) + &frac12;C(g). Relationship between K<sub>P</sub>, &alpha; and P is:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q28" value="1"> (1) K<sub>P</sub> = (&alpha;<sup>1/2</sup>P<sup>1/2</sup>) / (2 + &alpha;<sup>1/2</sup>)</label></li>
-            <li><label><input type="radio" name="q28" value="2"> (2) K<sub>P</sub> = (&alpha;<sup>3/2</sup>P<sup>1/2</sup>) / [(2+&alpha;)<sup>1/2</sup>(1-&alpha;)]</label></li>
-            <li><label><input type="radio" name="q28" value="3"> (3) K<sub>P</sub> = (&alpha;<sup>1/2</sup>P<sup>1/2</sup>) / (2 + &alpha;<sup>3/2</sup>)</label></li>
-            <li><label><input type="radio" name="q28" value="4"> (4) K<sub>P</sub> = (&alpha;<sup>1/2</sup>P<sup>1/2</sup>) / (2 + &alpha;)<sup>1/2</sup></label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="8">
-        <div class="question">29. Moles of H<sup>+</sup> required by 1 mole MnO<sub>4</sub><sup>-</sup> to oxidise oxalate to CO<sub>2</sub> is _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="6">
-        <div class="question">30. In reaction of K<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub>, KCl, and conc H<sub>2</sub>SO<sub>4</sub>, oxidation state of Cr in product is + _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-
-    <div class="question-container" data-ans="17190">
-        <div class="question">31. <sup>14</sup>C/<sup>12</sup>C in wood is 1/8 of atmosphere. Half life = 5730 yrs. Age = _____ yrs.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="7">
-        <div class="question">32. K<sub>a</sub> (CH<sub>3</sub>COOH) = 1.8&times;10<sup>-5</sup>, K<sub>b</sub> (NH<sub>4</sub>OH) = 1.8&times;10<sup>-5</sup>. pH of ammonium acetate is _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="1.93">
-        <div class="question">33. Electricity in C required for oxidation of 1 mol H<sub>2</sub>O to O<sub>2</sub> is _____ &times; 10<sup>5</sup> C.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="339">
-        <div class="question">34. MnO<sub>4</sub><sup>-</sup> + H<sup>+</sup> + H<sub>2</sub>C<sub>2</sub>O<sub>4</sub> &harr; Mn<sup>2+</sup> + H<sub>2</sub>O + CO<sub>2</sub>. E&deg; = 1.51V & -0.49V. K<sub>eq</sub> = 10<sup>x</sup>. x = _____.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">35. Solubility of Ca<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> (Mass M) is W g/100mL. K<sub>sp</sub> approx:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q35" value="1"> (1) 10<sup>7</sup> W<sup>3</sup>/M<sup>3</sup></label></li>
-            <li><label><input type="radio" name="q35" value="2"> (2) 10<sup>7</sup> W<sup>5</sup>/M<sup>5</sup></label></li>
-            <li><label><input type="radio" name="q35" value="3"> (3) 10<sup>3</sup> W<sup>5</sup>/M<sup>5</sup></label></li>
-            <li><label><input type="radio" name="q35" value="4"> (4) 10<sup>5</sup> W<sup>5</sup>/M<sup>5</sup></label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="4">
-        <div class="question">36. What pressure (bar) of H<sub>2</sub> makes emf of hydrogen electrode zero in pure water at 25&deg;C?</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q36" value="1"> (1) 10<sup>-7</sup></label></li>
-            <li><label><input type="radio" name="q36" value="2"> (2) 0.5</label></li>
-            <li><label><input type="radio" name="q36" value="3"> (3) 1</label></li>
-            <li><label><input type="radio" name="q36" value="4"> (4) 10<sup>-14</sup></label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="1">
-        <div class="question">37. Decreasing order of basic strength of conjugate bases: <sup>-</sup>OH, R&Omacr;, CH<sub>3</sub>CO&Omacr;, C&Iscr;&Omacr;:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q37" value="1"> (1) R&Omacr; > <sup>-</sup>OH > CH<sub>3</sub>CO&Omacr; > C&Iscr;&Omacr;</label></li>
-            <li><label><input type="radio" name="q37" value="2"> (2) C&Iscr;&Omacr; > R&Omacr; > <sup>-</sup>OH > CH<sub>3</sub>CO&Omacr;</label></li>
-            <li><label><input type="radio" name="q37" value="3"> (3) <sup>-</sup>OH > R&Omacr; > CH<sub>3</sub>CO&Omacr; > C&Iscr;&Omacr;</label></li>
-            <li><label><input type="radio" name="q37" value="4"> (4) C&Iscr;&Omacr; > <sup>-</sup>OH > R&Omacr; > CH<sub>3</sub>CO&Omacr;</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">38. Plot of molar conductivity vs (conc)<sup>1/2</sup> for strong electrolyte. Unit for the slope is:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q38" value="1"> (1) S cm<sup>2</sup> mol<sup>-3/2</sup> L<sup>-1/2</sup></label></li>
-            <li><label><input type="radio" name="q38" value="2"> (2) S cm<sup>2</sup> mol<sup>-3/2</sup> L<sup>1/2</sup></label></li>
-            <li><label><input type="radio" name="q38" value="3"> (3) S cm<sup>2</sup> mol<sup>-3/2</sup> L</label></li>
-            <li><label><input type="radio" name="q38" value="4"> (4) S cm<sup>2</sup> mol<sup>-1</sup> L<sup>1/2</sup></label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">39. Fuel cell (H<sub>2</sub>/O<sub>2</sub>): A. Used in spaceship B. 40% efficiency C. Uses Al catalyst D. Eco-friendly E. Type of Galvanic cell. Correct:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q39" value="1"> (1) A, B, D, E only</label></li>
-            <li><label><input type="radio" name="q39" value="2"> (2) A, D, E only</label></li>
-            <li><label><input type="radio" name="q39" value="3"> (3) A, B, D only</label></li>
-            <li><label><input type="radio" name="q39" value="4"> (4) A, B, C only</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">40. Reaction at cathode in cells commonly used in clocks involves:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q40" value="1"> (1) reduction of Mn from +7 to +2</label></li>
-            <li><label><input type="radio" name="q40" value="2"> (2) reduction of Mn from +4 to +3</label></li>
-            <li><label><input type="radio" name="q40" value="3"> (3) oxidation of Mn from +3 to +4</label></li>
-            <li><label><input type="radio" name="q40" value="4"> (4) oxidation of Mn from +2 to +7</label></li>
-        </ul>
-    </div>
-
-    <div class="question-container" data-ans="3">
-        <div class="question">41. Ionic conductivities of divalent cation & anion are 57 and 73 S cm<sup>2</sup> mol<sup>-1</sup>. Molar conductivity is:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q41" value="1"> (1) 187</label></li>
-            <li><label><input type="radio" name="q41" value="2"> (2) 260</label></li>
-            <li><label><input type="radio" name="q41" value="3"> (3) 130</label></li>
-            <li><label><input type="radio" name="q41" value="4"> (4) 65</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="3">
-        <div class="question">42. Fe<sub>2</sub>O<sub>3</sub>(s) + 3CO(g) &harr; 2Fe(l) + 3CO<sub>2</sub>(g). Which will not disturb equilibrium?</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q42" value="1"> (1) Addition of CO<sub>2</sub></label></li>
-            <li><label><input type="radio" name="q42" value="2"> (2) Removal of CO<sub>2</sub></label></li>
-            <li><label><input type="radio" name="q42" value="3"> (3) Addition of Fe<sub>2</sub>O<sub>3</sub></label></li>
-            <li><label><input type="radio" name="q42" value="4"> (4) Removal of CO</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="3">
-        <div class="question">43. Kinetic study 2A + B &rarr; C + D. Rate [0.1][0.1]=6e-3. Rate [0.4][0.1]=2.4e-2. Rate [0.3][0.2]=7.2e-2. Rate [0.3][0.4]=2.88e-1. Overall order is:</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">44. Quantity of silver deposited when one coulomb charge is passed:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q44" value="1"> (1) 1 g of silver</label></li>
-            <li><label><input type="radio" name="q44" value="2"> (2) 1 electrochemical equivalent</label></li>
-            <li><label><input type="radio" name="q44" value="3"> (3) 1 chemical equivalent</label></li>
-            <li><label><input type="radio" name="q44" value="4"> (4) 0.1 g atom</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="4">
-        <div class="question">45. For the electro chemical cell, if E&deg;<sub>(M<sup>2+</sup>/M)</sub> = 0.46 V and E&deg;<sub>(X/X<sup>2-</sup>)</sub> = 0.34 V. Which of the following is correct?</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q45" value="1"> (1) M + X &rarr; M<sup>2+</sup> + X<sup>2-</sup> is spontaneous</label></li>
-            <li><label><input type="radio" name="q45" value="2"> (2) E<sub>cell</sub> = 0.80 V</label></li>
-            <li><label><input type="radio" name="q45" value="3"> (3) E<sub>cell</sub> = -0.80 V</label></li>
-            <li><label><input type="radio" name="q45" value="4"> (4) M<sup>2+</sup> + X<sup>2-</sup> &rarr; M + X is spontaneous</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="315">
-        <div class="question">46. Consider gas reaction 2A<sub>(g)</sub> + B<sub>(g)</sub> &rarr; C<sub>(g)</sub>. Initial rate r<sub>1</sub> when P<sub>A</sub> = 1.5 atm, P<sub>B</sub> = 0.7 atm. Later rate r<sub>2</sub> when P<sub>C</sub> = 0.5 atm. Ratio r<sub>1</sub> : r<sub>2</sub> is _____ &times; 10<sup>-1</sup>.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="2">
-        <div class="question">47. At -20&deg;C, 1 atm, a cylinder is filled with equal molecules of H<sub>2</sub>, I<sub>2</sub>, and HI for reaction H<sub>2(g)</sub> + I<sub>2(g)</sub> &harr; 2HI<sub>(g)</sub>. K<sub>p</sub> is x &times; 10<sup>-1</sup>. The value of x is:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q47" value="1"> (1) 0.01</label></li>
-            <li><label><input type="radio" name="q47" value="2"> (2) 10</label></li>
-            <li><label><input type="radio" name="q47" value="3"> (3) 2</label></li>
-            <li><label><input type="radio" name="q47" value="4"> (4) 1</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="76">
-        <div class="question">48. Dissociation of weak acid: HX<sub>(aq)</sub> &harr; H<sup>+</sup><sub>(aq)</sub> + X<sup>-</sup><sub>(aq)</sub>, K<sub>a</sub> = 1.2 &times; 10<sup>-5</sup>. Osmotic pressure of 0.03 M HX at 300 K is _____ &times; 10<sup>-2</sup> bar.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="6">
-        <div class="question">49. Difference in 'spin-only' magnetic moment values of KMnO<sub>4</sub> and the manganese product formed during its titration against oxalic acid in acidic medium is _____ BM.</div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-
-    <div class="question-container" data-ans="3">
-        <div class="question">50. How can an electrochemical cell be converted into an electrolytic cell?</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q50" value="1"> (1) Applying an external opposite potential lower than E&deg; cell.</label></li>
-            <li><label><input type="radio" name="q50" value="2"> (2) Reversing the flow of ions in salt bridge.</label></li>
-            <li><label><input type="radio" name="q50" value="3"> (3) Applying an external opposite potential greater than E&deg; cell.</label></li>
-            <li><label><input type="radio" name="q50" value="4"> (4) Exchanging the electrodes at anode and cathode.</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="1">
-        <div class="question">51. The ratio K<sub>P</sub>/K<sub>C</sub> for the reaction : CO<sub>(g)</sub> + &frac12;O<sub>2(g)</sub> &harr; CO<sub>2(g)</sub> is :</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q51" value="1"> (1) 1/&radic;(RT)</label></li>
-            <li><label><input type="radio" name="q51" value="2"> (2) (RT)<sup>1/2</sup></label></li>
-            <li><label><input type="radio" name="q51" value="3"> (3) RT</label></li>
-            <li><label><input type="radio" name="q51" value="4"> (4) 1</label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="5">
-        <div class="question">52. A solution containing 10 g of an electrolyte AB<sub>2</sub> in 100 g of water boils at 100.52&deg;C. The degree of ionization of the electrolyte (&alpha;) is _____ &times; 10<sup>-1</sup>. (nearest integer)<br><small>[Given : Molar mass of AB<sub>2</sub> = 200 g mol<sup>-1</sup>, K<sub>b</sub> (water) = 0.52 K kg mol<sup>-1</sup>, boiling point of water = 100&deg;C; AB<sub>2</sub> ionises as AB<sub>2</sub> &rarr; A<sup>2+</sup> + 2B<sup>-</sup>]</small></div>
-        <input type="text" placeholder="Your Answer">
-    </div>
-    <div class="question-container" data-ans="3">
-        <div class="question">53. Let y = y(x) be the solution of the differential equation<br>(1 + y<sup>2</sup>)e<sup>tan x</sup> dx + cos<sup>2</sup> x (1 + e<sup>2tan x</sup>)dy = 0, y(0) = 1. Then y(&pi;/4) is equal to:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q53" value="1"> (1) 2/e</label></li>
-            <li><label><input type="radio" name="q53" value="2"> (2) 2/e<sup>2</sup></label></li>
-            <li><label><input type="radio" name="q53" value="3"> (3) 1/e</label></li>
-            <li><label><input type="radio" name="q53" value="4"> (4) 1/e<sup>2</sup></label></li>
-        </ul>
-    </div>
-    <div class="question-container" data-ans="4">
-        <div class="question">54. Iron (III) catalyses the reaction between iodide and persulphate ions, in which:<br>A. Fe<sup>3+</sup> oxidises the iodide ion<br>B. Fe<sup>3+</sup> oxidises the persulphate ion<br>C. Fe<sup>2+</sup> reduces the iodide ion<br>D. Fe<sup>2+</sup> reduces the persulphate ion<br>Choose the most appropriate answer:</div>
-        <ul class="options">
-            <li><label><input type="radio" name="q54" value="1"> (1) B only</label></li>
-            <li><label><input type="radio" name="q54" value="2"> (2) A only</label></li>
-            <li><label><input type="radio" name="q54" value="3"> (3) B and C only</label></li>
-            <li><label><input type="radio" name="q54" value="4"> (4) A and D only</label></li>
-        </ul>
-    </div>
-
-    <button id="grade-btn" onclick="gradeQuiz()">Grade My Quiz</button>
-    <div id="results"></div>
-
-    <div class="answer-key" id="answer-key">
-        <h2>Answer Key</h2>
-        <div class="grid-answers">
-            <p>1: <span>4</span></p><p>2: <span>(1)</span></p><p>3: <span>(2)</span></p><p>4: <span>(2)</span></p><p>5: <span>3</span></p>
-            <p>6: <span>917</span></p><p>7: <span>(1)</span></p><p>8: <span>(4)</span></p><p>9: <span>5</span></p><p>10: <span>(3)</span></p>
-            <p>11: <span>(3)</span></p><p>12: <span>18</span></p><p>13: <span>0</span></p><p>14: <span>37</span></p><p>15: <span>46</span></p>
-            <p>16: <span>2</span></p><p>17: <span>2</span></p><p>18: <span>417</span></p><p>19: <span>9</span></p><p>20: <span>24</span></p>
-            <p>21: <span>(2)</span></p><p>22: <span>100</span></p><p>23: <span>17</span></p><p>24: <span>(2)</span></p><p>25: <span>(1)</span></p>
-            <p>26: <span>5</span></p><p>27: <span>28</span></p><p>28: <span>(2)</span></p><p>29: <span>8</span></p><p>30: <span>6</span></p>
-            <p>31: <span>17190</span></p><p>32: <span>7</span></p><p>33: <span>1.93</span></p><p>34: <span>339</span></p><p>35: <span>(2)</span></p>
-            <p>36: <span>(4)</span></p><p>37: <span>(1)</span></p><p>38: <span>(2)</span></p><p>39: <span>(2)</span></p><p>40: <span>(2)</span></p>
-            <p>41: <span>(3)</span></p><p>42: <span>(3)</span></p><p>43: <span>3</span></p><p>44: <span>(2)</span></p><p>45: <span>(4)</span></p>
-            <p>46: <span>315</span></p><p>47: <span>(2)</span></p><p>48: <span>76</span></p><p>49: <span>6</span></p><p>50: <span>(3)</span></p>
-            <p>51: <span>(1)</span></p><p>52: <span>5</span></p><p>53: <span>(3)</span></p><p>54: <span>(4)</span></p>
+            <div class="palette-grid-container">
+                <div style="font-weight: bold; margin-bottom: 10px;">Question Palette:</div>
+                <div class="palette-grid" id="palette-grid">
+                    </div>
+            </div>
+            
+            <div class="submit-btn-container">
+                <button class="btn btn-submit-test" onclick="submitTest()">Submit Test</button>
+            </div>
         </div>
     </div>
 
+    <div id="result-screen">
+        <h2>Test Submitted Successfully!</h2>
+        <div class="score-card" id="score-card"></div>
+        <button class="btn btn-submit-test" style="width: 200px;" onclick="location.reload()">Restart Test</button>
+    </div>
+
     <script>
-        function gradeQuiz() {
-            let score = 0;
-            const total = 54;
-            const containers = document.querySelectorAll('.question-container');
+        // Data containing 10 questions from your previous mock test
+        const questions = [
+            {
+                q: "Which of the following equations correctly represents the relationship between molar conductivity (&Lambda;<sub>m</sub>), limiting molar conductivity (&Lambda;&deg;<sub>m</sub>), and concentration (C)?",
+                options: [
+                    "&Lambda;<sub>m</sub> - &Lambda;&deg;<sub>m</sub> + A C<sup>1/2</sup> = 0",
+                    "&Lambda;<sub>m</sub><sup>2</sup> C - K<sub>a</sub> &Lambda;<sub>m</sub><sup>&deg;2</sup> + K<sub>a</sub> &Lambda;<sub>m</sub> &Lambda;&deg;<sub>m</sub> = 0",
+                    "&Lambda;<sub>m</sub><sup>2</sup> C + K<sub>a</sub> &Lambda;<sub>m</sub><sup>&deg;2</sup> - K<sub>a</sub> &Lambda;<sub>m</sub> &Lambda;&deg;<sub>m</sub> = 0",
+                    "&Lambda;<sub>m</sub> - &Lambda;&deg;<sub>m</sub> - A C<sup>1/2</sup> = 0"
+                ],
+                ans: 0 // Index of correct option
+            },
+            {
+                q: "For a strong electrolyte, a plot of molar conductivity against the square root of concentration is a straight line, with the slope having the unit:",
+                options: [
+                    "mol<sup>-3/2</sup> L<sup>-1/2</sup> S cm<sup>2</sup>",
+                    "mol<sup>-3/2</sup> L<sup>1/2</sup> S cm<sup>2</sup>",
+                    "mol<sup>-3/2</sup> L S cm<sup>2</sup>",
+                    "mol<sup>-1</sup> L<sup>1/2</sup>"
+                ],
+                ans: 1
+            },
+            {
+                q: "For a concentrated solution of a weak electrolyte A<sub>2</sub>B<sub>3</sub> of concentration 'C', the degree of dissociation '&alpha;' (K<sub>eq</sub> = equilibrium constant) is:",
+                options: [
+                    "(K<sub>eq</sub> / 5c<sup>4</sup>)<sup>1/5</sup>",
+                    "(K<sub>eq</sub> / 108c<sup>4</sup>)<sup>1/5</sup>",
+                    "(K<sub>eq</sub> / 25c<sup>2</sup>)<sup>1/5</sup>",
+                    "(K<sub>eq</sub> / 6c<sup>5</sup>)<sup>1/5</sup>"
+                ],
+                ans: 1
+            },
+            {
+                q: "For a sparingly soluble salt AB<sub>2</sub>, the equilibrium concentrations of A<sup>2+</sup> ions and B<sup>-</sup> ions are 1.2 &times; 10<sup>-4</sup> M and 0.24 &times; 10<sup>-3</sup> M, respectively. The solubility product of AB<sub>2</sub> is:",
+                options: [
+                    "6.91 &times; 10<sup>-12</sup>",
+                    "0.276 &times; 10<sup>-12</sup>",
+                    "27.65 &times; 10<sup>-12</sup>",
+                    "0.069 &times; 10<sup>-12</sup>"
+                ],
+                ans: 0
+            },
+            {
+                q: "The equilibrium constant for the reaction SO<sub>3</sub>(g) &harr; SO<sub>2</sub>(g) + &frac12;O<sub>2</sub>(g) is K<sub>c</sub> = 4.9 &times; 10<sup>-2</sup>. The value of K<sub>c</sub> for the reaction 2SO<sub>2</sub>(g) + O<sub>2</sub>(g) &harr; 2SO<sub>3</sub>(g) is:",
+                options: [
+                    "4.9",
+                    "49",
+                    "41.6",
+                    "416"
+                ],
+                ans: 3
+            },
+            {
+                q: "Identify the factor from the following that does not affect electrolytic conductance of a solution.",
+                options: [
+                    "The nature of the electrolyte added.",
+                    "The nature of the electrode used.",
+                    "Concentration of the electrolyte.",
+                    "The nature of solvent used."
+                ],
+                ans: 1
+            },
+            {
+                q: "Integrated rate law equation for a first order gas phase reaction is given by (where P<sub>i</sub> is initial pressure and P<sub>t</sub> is total pressure at time t):",
+                options: [
+                    "k = (2.303 / t) &times; log [P<sub>i</sub> / (2P<sub>i</sub> - P<sub>t</sub>)]",
+                    "k = (2.303 / t) &times; log [2P<sub>i</sub> / (2P<sub>i</sub> - P<sub>t</sub>)]",
+                    "k = (2.303 / t) &times; log [(2P<sub>i</sub> - P<sub>t</sub>) / P<sub>i</sub>]",
+                    "k = (2.303 / t) &times; [P<sub>i</sub> / (2P<sub>i</sub> - P<sub>t</sub>)]"
+                ],
+                ans: 0
+            },
+            {
+                q: "Decreasing order of basic strength of conjugate bases: <sup>-</sup>OH, R&Omacr;, CH<sub>3</sub>CO&Omacr;, C&Iscr;&Omacr;:",
+                options: [
+                    "R&Omacr; > <sup>-</sup>OH > CH<sub>3</sub>CO&Omacr; > C&Iscr;&Omacr;",
+                    "C&Iscr;&Omacr; > R&Omacr; > <sup>-</sup>OH > CH<sub>3</sub>CO&Omacr;",
+                    "<sup>-</sup>OH > R&Omacr; > CH<sub>3</sub>CO&Omacr; > C&Iscr;&Omacr;",
+                    "C&Iscr;&Omacr; > <sup>-</sup>OH > R&Omacr; > CH<sub>3</sub>CO&Omacr;"
+                ],
+                ans: 0
+            },
+            {
+                q: "How can an electrochemical cell be converted into an electrolytic cell?",
+                options: [
+                    "Applying an external opposite potential lower than E&deg; cell.",
+                    "Reversing the flow of ions in salt bridge.",
+                    "Applying an external opposite potential greater than E&deg; cell.",
+                    "Exchanging the electrodes at anode and cathode."
+                ],
+                ans: 2
+            },
+            {
+                q: "At -20&deg;C, 1 atm, a cylinder is filled with equal molecules of H<sub>2</sub>, I<sub>2</sub>, and HI for reaction H<sub>2(g)</sub> + I<sub>2(g)</sub> &harr; 2HI<sub>(g)</sub>. K<sub>p</sub> is x &times; 10<sup>-1</sup>. The value of x is:",
+                options: [
+                    "0.01",
+                    "10",
+                    "2",
+                    "1"
+                ],
+                ans: 1
+            }
+        ];
 
-            containers.forEach(container => {
-                const correctAnswer = container.getAttribute('data-ans').toLowerCase().trim();
-                const input = container.querySelector('input[type="text"]');
-                const radios = container.querySelectorAll('input[type="radio"]');
-                
-                // Reset styling
-                container.classList.remove('correct', 'incorrect');
-                
-                let userAnswer = "";
-                
-                if (input) {
-                    userAnswer = input.value.toLowerCase().trim();
-                } else if (radios.length > 0) {
-                    radios.forEach(radio => {
-                        if (radio.checked) userAnswer = radio.value;
-                    });
-                }
-
-                if (userAnswer === correctAnswer) {
-                    container.classList.add('correct');
-                    score++;
-                } else {
-                    container.classList.add('incorrect');
-                }
-            });
-
-            document.getElementById('results').innerText = `You scored ${score} out of ${total}!`;
-            document.getElementById('answer-key').style.display = 'block';
-            
-            // Smooth scroll to the result text
-            setTimeout(() => {
-                document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
+        let currentQuestion = 0;
+        
+        // Status codes: 0: Not Visited, 1: Not Answered, 2: Answered, 3: Marked, 4: Answered & Marked
+        let statuses = new Array(questions.length).fill(0); 
+        let responses = new Array(questions.length).fill(null);
+        
+        // Initialize
+        function init() {
+            renderPalette();
+            loadQuestion(0);
+            startTimer(3600); // 60 minutes
         }
+
+        function loadQuestion(index) {
+            currentQuestion = index;
+            document.getElementById('q-no').innerText = `Question No. ${index + 1}`;
+            document.getElementById('question-text').innerHTML = questions[index].q;
+            
+            // Mark as visited if not answered or marked
+            if (statuses[index] === 0) {
+                statuses[index] = 1;
+                updatePalette();
+            }
+
+            const optContainer = document.getElementById('options-container');
+            optContainer.innerHTML = '';
+            
+            questions[index].options.forEach((opt, i) => {
+                const isChecked = responses[index] === i ? 'checked' : '';
+                optContainer.innerHTML += `
+                    <label class="option-lbl">
+                        <input type="radio" name="opt" value="${i}" ${isChecked}> 
+                        ( ${i + 1} ) ${opt}
+                    </label>
+                `;
+            });
+            updatePaletteUI();
+        }
+
+        function getSelectedOption() {
+            const opts = document.getElementsByName('opt');
+            for (let i = 0; i < opts.length; i++) {
+                if (opts[i].checked) return i;
+            }
+            return null;
+        }
+
+        function saveAndNext() {
+            const selected = getSelectedOption();
+            if (selected !== null) {
+                responses[currentQuestion] = selected;
+                statuses[currentQuestion] = 2; // Answered
+            } else {
+                if(statuses[currentQuestion] !== 2 && statuses[currentQuestion] !== 4) {
+                    statuses[currentQuestion] = 1; // Not Answered
+                }
+            }
+            goToNext();
+        }
+
+        function markForReviewAndNext() {
+            const selected = getSelectedOption();
+            if (selected !== null) {
+                responses[currentQuestion] = selected;
+                statuses[currentQuestion] = 4; // Answered & Marked
+            } else {
+                statuses[currentQuestion] = 3; // Marked
+            }
+            goToNext();
+        }
+
+        function clearResponse() {
+            const opts = document.getElementsByName('opt');
+            opts.forEach(opt => opt.checked = false);
+            responses[currentQuestion] = null;
+            statuses[currentQuestion] = 1; // Changed to Not Answered
+            updatePalette();
+        }
+
+        function goToNext() {
+            updatePalette();
+            if (currentQuestion < questions.length - 1) {
+                loadQuestion(currentQuestion + 1);
+            } else {
+                loadQuestion(0); // Cycle back to first if at end (or show prompt)
+            }
+        }
+
+        function renderPalette() {
+            const grid = document.getElementById('palette-grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < questions.length; i++) {
+                grid.innerHTML += `<div class="q-btn status-${statuses[i]}" id="btn-${i}" onclick="loadQuestion(${i})">${i + 1}</div>`;
+            }
+            updatePaletteCount();
+        }
+
+        function updatePalette() {
+            const btn = document.getElementById(`btn-${currentQuestion}`);
+            btn.className = `q-btn status-${statuses[currentQuestion]}`;
+            updatePaletteCount();
+        }
+        
+        function updatePaletteUI() {
+            // Highlight current button
+            for (let i = 0; i < questions.length; i++) {
+                document.getElementById(`btn-${i}`).style.border = (i === currentQuestion) ? '2px solid black' : '1px solid #ccc';
+            }
+        }
+
+        function updatePaletteCount() {
+            let counts = [0, 0, 0, 0, 0];
+            statuses.forEach(s => counts[s]++);
+            for(let i=0; i<=4; i++) {
+                document.getElementById(`count-${i}`).innerText = counts[i];
+            }
+        }
+
+        function submitTest() {
+            if(confirm("Are you sure you want to submit the test?")) {
+                let score = 0;
+                let attempted = 0;
+                
+                responses.forEach((ans, i) => {
+                    if (ans !== null) {
+                        attempted++;
+                        if (ans === questions[i].ans) score += 4; // +4 for correct
+                        else score -= 1; // -1 for incorrect
+                    }
+                });
+
+                document.getElementById('test-screen').style.display = 'none';
+                document.getElementById('result-screen').style.display = 'block';
+                document.getElementById('score-card').innerHTML = `
+                    Total Questions: ${questions.length} <br>
+                    Attempted: ${attempted} <br><br>
+                    <strong>Estimated Score: ${score} / ${questions.length * 4}</strong>
+                `;
+            }
+        }
+
+        // Timer
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                document.getElementById('timer').innerText = "Time Left: " + minutes + ":" + seconds;
+                if (--timer < 0) {
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>
